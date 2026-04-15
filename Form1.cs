@@ -25,7 +25,40 @@ namespace SistemManajemenDistributorSayur
 
             string connectionString = @"Data Source=LAPTOP-V3CL2RKG\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
 
-           
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+
+                    string query = "SELECT Role FROM Users WHERE Username = @username AND Password = @password";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", user);
+                    cmd.Parameters.AddWithValue("@password", pass);
+
+                    conn.Open();
+                    // Mengambil hasil pertama (Role)
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        string userRole = result.ToString();
+                        MessageBox.Show($"Login Berhasil sebagai {userRole}!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Form2 fMain = new Form2(userRole);
+                        fMain.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Username atau Password salah!", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
 
