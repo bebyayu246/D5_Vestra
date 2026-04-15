@@ -17,7 +17,17 @@ namespace SistemManajemenDistributorSayur
             txtPassword.UseSystemPasswordChar = true;
         }
 
-       
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            string user = txtUsername.Text.Trim();
+            string pass = txtPassword.Text.Trim();
+
+
+            string connectionString = @"Data Source=LAPTOP-V3CL2RKG\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
+
+           
+        }
+
 
 
 
