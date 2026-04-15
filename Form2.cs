@@ -14,7 +14,26 @@ namespace SistemManajemenDistributorSayur
 {
     public partial class Form2 : Form
     {
-    
+        // 1. Variabel Global
+        string connectionString = "Data Source=LAPTOP-V3CL2RKG\\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
+        string userRole = "";
+        string tabelAktif = "";
+
+
+        // 2. Constructor (Penerima Role dari Form Login)
+        public Form2(string role)
+        {
+            InitializeComponent();
+            this.userRole = role; // Simpan role (Admin/Petugas)
+
+            //BuatDataGridView();
+            AturHakAkses();
+        }
+
+
+
+
+        
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
