@@ -155,6 +155,88 @@ namespace SistemManajemenDistributorSayur
             LoadDataKeGrid("SELECT * FROM Pembeli");
         }
 
+        private void btnCetakStruk_Click(object sender, EventArgs e)
+        {
+            tabelAktif = "Transaksi";
+            LoadDataKeGrid("SELECT * FROM Transaksi");
+
+            if (dgvData.SelectedRows.Count > 0)
+            {
+                if (printDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Pilih satu baris transaksi dulu!");
+            }
+        }
+
+        // --- KODE TOMBOL CRUD ---
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            if (tabelAktif != "") LoadDataKeGrid($"SELECT * FROM {tabelAktif}");
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvData.SelectedRows.Count > 0 && tabelAktif != "")
+            {
+                DialogResult res = MessageBox.Show("Hapus data ini?", "Konfirmasi", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    string idData = dgvData.SelectedRows[0].Cells[0].Value.ToString();
+                    string kolomID = dgvData.Columns[0].Name;
+
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        string query = $"DELETE FROM {tabelAktif} WHERE {kolomID} = @ID";
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@ID", idData);
+                        cmd.ExecuteNonQuery();
+                        btnRead_Click(sender, e);
+                    }
+                }
+            }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            if (tabelAktif == "Petani" || tabelAktif == "Pembeli")
+            {
+                FormDataPetaniDanPembeli frm = new FormDataPetaniDanPembeli(tabelAktif, "");
+                frm.ShowDialog();
+            }
+            else if (tabelAktif == "Sayur")
+            {
+                FormTambahSayur frm = new FormTambahSayur("");
+                frm.ShowDialog();
+            }
+            btnRead_Click(sender, e);
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (dgvData.SelectedRows.Count > 0)
+            {
+                // Ambil ID dari kolom pertama (index 0)
+                string id = dgvData.SelectedRows[0].Cells[0].Value.ToString();
+
+                if (tabelAktif == "Sayur")
+                {
+                    // Kirim ID-nya ke form sebelah
+                    FormTambahSayur frm = new FormTambahSayur(id);
+                    frm.ShowDialog();
+                    btnRead_Click(sender, e); 
+                }
+            }
+            else
+            {
+                MessageBox.Show("Pilih data di tabel dulu!");
+            }
+        }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
