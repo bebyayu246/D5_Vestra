@@ -31,9 +31,24 @@ namespace SistemManajemenDistributorSayur
         }
 
 
+        // 3. Sistem Pembatasan Akses
+        private void AturHakAkses()
+        {
+           
+            btnCreate.Visible = true;
+            btnUpdate.Visible = true;
+            btnDelete.Visible = true;
 
+       
+            btnLogStok.Enabled = true;
+            btnKeuangan.Enabled = true;
 
-        
+            btnCreate.BringToFront();
+            btnUpdate.BringToFront();
+            btnDelete.BringToFront();
+        }
+       
+       
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
