@@ -76,7 +76,25 @@
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.TextChanged += new System.EventHandler(this.btnLogin_Click);
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-       
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(77, 364);
+            this.txtPassword.Multiline = true;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(284, 38);
+            this.txtPassword.TabIndex = 7;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(52, 334);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Password";
+            
     }
 }
 
