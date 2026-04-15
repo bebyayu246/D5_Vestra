@@ -35,7 +35,26 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-           
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Ivory;
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.btnLogin);
+            this.panel1.Controls.Add(this.txtPassword);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.txtUsername);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(263, -1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(431, 652);
+            this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            
     }
 }
 
