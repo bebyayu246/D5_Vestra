@@ -17,7 +17,7 @@ namespace SistemManajemenDistributorSayur
             txtPassword.UseSystemPasswordChar = true;
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e) 
         {
             string user = txtUsername.Text.Trim();
             string pass = txtPassword.Text.Trim();
@@ -30,7 +30,7 @@ namespace SistemManajemenDistributorSayur
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
 
-                    string query = "SELECT Role FROM Users WHERE Username = @username AND Password = @password";
+                    string query = "SELECT Role FROM Users WHERE Username = @username AND Password = HASHBYTES('SHA2_256', CAST(@password as varchar(100)))";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@username", user);
@@ -74,6 +74,19 @@ namespace SistemManajemenDistributorSayur
         private void txtUsername_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(txtPassword.UseSystemPasswordChar == true && txtPassword.Multiline == false)
+            {
+                txtPassword.UseSystemPasswordChar = false;
+                txtPassword.Multiline = true;
+            } else if (txtPassword.UseSystemPasswordChar == false && txtPassword.Multiline == true)
+            {
+                txtPassword.UseSystemPasswordChar = true;
+                txtPassword.Multiline = false;
+            }
         }
     }
 }
