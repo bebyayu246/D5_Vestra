@@ -67,8 +67,16 @@ namespace SistemManajemenDistributorSayur
             {
                 try
                 {
+                    string query = "";
                     conn.Open();
-                    string query = "INSERT INTO Sayur (NamaSayur, Kategori, Stok, HargaJual) VALUES (@nama, @kat, @stok, @harga)";
+                    if (idTerpilih != "")
+                    {
+                        query = "UPDATE Sayur SET NamaSayur = @nama, Kategori = @kat, Stok = @stok, HargaJual = @harga where SayurID = " + idTerpilih;
+                    }
+                    else
+                    {
+                        query = "INSERT INTO Sayur (NamaSayur, Kategori, Stok, HargaJual) VALUES (@nama, @kat, @stok, @harga)";
+                    }
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 

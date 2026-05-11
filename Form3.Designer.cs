@@ -106,7 +106,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Name = "FormTambahSayur";
-            this.Text = "TambahSayur";
+            this.Text = "f";
             this.ResumeLayout(false);
             this.PerformLayout();
 
