@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,12 +34,12 @@ namespace SistemManajemenDistributorSayur
         // 3. Sistem Pembatasan Akses
         private void AturHakAkses()
         {
-           
+
             btnCreate.Visible = true;
             btnUpdate.Visible = true;
             btnDelete.Visible = true;
 
-       
+
             btnLogStok.Enabled = true;
             btnKeuangan.Enabled = true;
 
@@ -47,7 +47,7 @@ namespace SistemManajemenDistributorSayur
             btnUpdate.BringToFront();
             btnDelete.BringToFront();
         }
-       
+
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {
             printDocument1_PrintPage(sender, e);
@@ -229,7 +229,14 @@ namespace SistemManajemenDistributorSayur
                     // Kirim ID-nya ke form sebelah
                     FormTambahSayur frm = new FormTambahSayur(id);
                     frm.ShowDialog();
-                    btnRead_Click(sender, e); 
+                    btnRead_Click(sender, e);
+                }
+                else if (tabelAktif == "Petani" || tabelAktif == "Pembeli")
+                {
+                    // Kirim ID-nya ke form Petani/Pembeli
+                    FormDataPetaniDanPembeli frm = new FormDataPetaniDanPembeli(tabelAktif, id);
+                    frm.ShowDialog();
+                    btnRead_Click(sender, e);
                 }
             }
             else
