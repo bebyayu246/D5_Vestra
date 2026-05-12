@@ -22,7 +22,7 @@
         private void InitializeComponent()
         {
             this.txtAlamat = new System.Windows.Forms.TextBox();
-            this.txtTelepon = new System.Windows.Forms.TextBox();
+            this.txtNoTelp = new System.Windows.Forms.TextBox();
             this.cbStatus = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,13 +40,13 @@
             this.txtAlamat.Size = new System.Drawing.Size(278, 42);
             this.txtAlamat.TabIndex = 15;
             // 
-            // txtTelepon
+            // txtNoTelp
             // 
-            this.txtTelepon.Location = new System.Drawing.Point(144, 150);
-            this.txtTelepon.Multiline = true;
-            this.txtTelepon.Name = "txtTelepon";
-            this.txtTelepon.Size = new System.Drawing.Size(278, 42);
-            this.txtTelepon.TabIndex = 14;
+            this.txtNoTelp.Location = new System.Drawing.Point(144, 150);
+            this.txtNoTelp.Multiline = true;
+            this.txtNoTelp.Name = "txtNoTelp";
+            this.txtNoTelp.Size = new System.Drawing.Size(278, 42);
+            this.txtNoTelp.TabIndex = 14;
             // 
             // cbStatus
             // 
@@ -91,12 +91,13 @@
             // 
             // btnSimpan
             // 
+            this.btnSimpan.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnSimpan.Location = new System.Drawing.Point(222, 250);
             this.btnSimpan.Name = "btnSimpan";
             this.btnSimpan.Size = new System.Drawing.Size(121, 39);
             this.btnSimpan.TabIndex = 17;
             this.btnSimpan.Text = "Simpan";
-            this.btnSimpan.UseVisualStyleBackColor = true;
+            this.btnSimpan.UseVisualStyleBackColor = false;
             this.btnSimpan.Click += new System.EventHandler(this.btnSimpan_Click);
             // 
             // txtNama
@@ -126,7 +127,7 @@
             this.Controls.Add(this.txtNama);
             this.Controls.Add(this.btnSimpan);
             this.Controls.Add(this.txtAlamat);
-            this.Controls.Add(this.txtTelepon);
+            this.Controls.Add(this.txtNoTelp);
             this.Controls.Add(this.cbStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -140,13 +141,13 @@
 
         #endregion
         private System.Windows.Forms.TextBox txtAlamat;
-        private System.Windows.Forms.TextBox txtTelepon;
+        private System.Windows.Forms.TextBox txtNoTelp;
         private System.Windows.Forms.ComboBox cbStatus;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblNama;
         private System.Windows.Forms.Button btnSimpan;
-        private System.Windows.Forms.TextBox txtNama;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNama;
     }
 }

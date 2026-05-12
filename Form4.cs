@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-namespace SistemManajemenDistributorSayur 
+namespace SistemManajemenDistributorSayur
 {
     public partial class FormDataPetaniDanPembeli : Form
     {
-        
+
         string connectionString = @"Data Source=LAPTOP-V3CL2RKG\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
 
         string tipeOrang = ""; // Untuk menampung "Petani" atau "Pembeli"
         string idEdit = "";    // Untuk menampung ID jika mode Update
 
-        
+
         public FormDataPetaniDanPembeli(string tipe, string id)
         {
             InitializeComponent();
             this.tipeOrang = tipe;
             this.idEdit = id;
 
-            
+
             if (tipeOrang == "Petani")
             {
                 lblNama.Text = "Nama Petani";
@@ -38,7 +38,7 @@ namespace SistemManajemenDistributorSayur
                 this.Text = "Kelola Data Pembeli";
             }
 
-            
+
             if (cbStatus.SelectedIndex == -1 && cbStatus.Items.Count > 0)
             {
                 cbStatus.SelectedIndex = 0;
@@ -47,6 +47,20 @@ namespace SistemManajemenDistributorSayur
             if (idEdit != "")
             {
                 MuatDataLama();
+            }
+
+            // Tambahkan event handler untuk validasi input
+            txtNama.KeyPress += OnlyLetters_KeyPress;
+            txtAlamat.KeyPress += OnlyLetters_KeyPress;
+        }
+
+        // Fungsi Validasi: Hanya boleh huruf, spasi, dan tombol control (seperti backspace)
+        private void OnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true; // Tolak input jika bukan huruf/spasi
+                MessageBox.Show("Hanya diperbolehkan memasukkan huruf!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -57,7 +71,7 @@ namespace SistemManajemenDistributorSayur
                 try
                 {
                     conn.Open();
-                    
+
                     string tabel = (tipeOrang == "Petani") ? "Petani" : "Pembeli";
                     string kolomID = (tipeOrang == "Petani") ? "ID_Petani" : "ID_Pembeli";
 
@@ -73,7 +87,7 @@ namespace SistemManajemenDistributorSayur
 
                         txtNama.Text = dr[kolomNama].ToString();
                         txtAlamat.Text = dr["Alamat"].ToString();
-                        txtTelepon.Text = dr["NoTelepon"].ToString();
+                        txtNoTelp.Text = dr["NoTelepon"].ToString();
                         cbStatus.Text = dr["Status"].ToString();
                     }
                 }
@@ -86,7 +100,7 @@ namespace SistemManajemenDistributorSayur
 
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-            
+
             if (string.IsNullOrEmpty(txtNama.Text))
             {
                 MessageBox.Show("Nama harus diisi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -115,14 +129,14 @@ namespace SistemManajemenDistributorSayur
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@n", txtNama.Text);
                     cmd.Parameters.AddWithValue("@a", txtAlamat.Text);
-                    cmd.Parameters.AddWithValue("@t", txtTelepon.Text);
-                    cmd.Parameters.AddWithValue("@s", cbStatus.Text); 
+                    cmd.Parameters.AddWithValue("@t", txtNoTelp.Text);
+                    cmd.Parameters.AddWithValue("@s", cbStatus.Text);
                     if (idEdit != "") cmd.Parameters.AddWithValue("@id", idEdit);
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show($"Data {tipeOrang} berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    this.Close(); 
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
