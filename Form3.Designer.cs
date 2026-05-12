@@ -85,12 +85,13 @@
             // 
             // btnSimpan
             // 
+            this.btnSimpan.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnSimpan.Location = new System.Drawing.Point(152, 268);
             this.btnSimpan.Name = "btnSimpan";
             this.btnSimpan.Size = new System.Drawing.Size(131, 38);
             this.btnSimpan.TabIndex = 9;
             this.btnSimpan.Text = "Simpan";
-            this.btnSimpan.UseVisualStyleBackColor = true;
+            this.btnSimpan.UseVisualStyleBackColor = false;
             this.btnSimpan.Click += new System.EventHandler(this.btnSimpan_Click);
             // 
             // FormTambahSayur
@@ -106,7 +107,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Name = "FormTambahSayur";
-            this.Text = "f";
+            this.Text = "formTambahSayur";
             this.ResumeLayout(false);
             this.PerformLayout();
 
