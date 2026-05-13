@@ -16,7 +16,6 @@ namespace SistemManajemenDistributorSayur
         string connectionString = @"Data Source=LAPTOP-V3CL2RKG\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
         string idTerpilih = "";
 
-
         public FormTambahSayur(string id)
         {
             InitializeComponent();
@@ -50,26 +49,27 @@ namespace SistemManajemenDistributorSayur
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                conn.Open();
-
-                string query = "SELECT * FROM Sayur WHERE SayurID=@id";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@id", idTerpilih);
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                if (dr.Read())
+                try
                 {
-                    txtNama.Text = dr["NamaSayur"].ToString();
-                    txtStok.Text = dr["Stok"].ToString();
-                    txtHarga.Text = dr["HargaJual"].ToString();
+                    conn.Open();
+                    string query = "SELECT * FROM Sayur WHERE SayurID=@id";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@id", idTerpilih);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
+                    {
+                        txtNama.Text = dr["NamaSayur"].ToString();
+                        txtStok.Text = dr["Stok"].ToString();
+                        txtHarga.Text = dr["HargaJual"].ToString();
+                    }
                 }
+                catch (Exception ex) { MessageBox.Show("Gagal Muat Data: " + ex.Message); }
             }
         }
 
         private void btnSimpan_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(txtNama.Text) || string.IsNullOrEmpty(txtStok.Text) || string.IsNullOrEmpty(txtHarga.Text))
             {
                 MessageBox.Show("Semua data (Nama, Stok, Harga) harus diisi!", "Peringatan");
@@ -80,24 +80,25 @@ namespace SistemManajemenDistributorSayur
             {
                 try
                 {
-                    string query = "";
                     conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_ManageSayur", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
                     if (idTerpilih != "")
                     {
-                        query = "UPDATE Sayur SET NamaSayur = @nama, Kategori = @kat, Stok = @stok, HargaJual = @harga where SayurID = @id";
+                        cmd.Parameters.AddWithValue("@Action", "UPDATE");
+                        cmd.Parameters.AddWithValue("@ID", idTerpilih);
                     }
                     else
                     {
-                        query = "EXEC insertSayur @nama = @nama, @kat = @kat, @stok = @stok, @harga = @harga";
+                        cmd.Parameters.AddWithValue("@Action", "INSERT");
+                        cmd.Parameters.AddWithValue("@ID", DBNull.Value);
                     }
 
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    cmd.Parameters.AddWithValue("@nama", txtNama.Text);
-                    cmd.Parameters.AddWithValue("@kat", "Umum");
-                    cmd.Parameters.AddWithValue("@stok", int.Parse(txtStok.Text));
-                    cmd.Parameters.AddWithValue("@harga", double.Parse(txtHarga.Text));
-                    if (idTerpilih != "") cmd.Parameters.AddWithValue("@id", idTerpilih);
+                    cmd.Parameters.AddWithValue("@Nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@Kat", "Umum");
+                    cmd.Parameters.AddWithValue("@Stok", int.Parse(txtStok.Text));
+                    cmd.Parameters.AddWithValue("@Harga", double.Parse(txtHarga.Text));
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Data sayur berhasil disimpan!", "Sukses");
@@ -108,6 +109,16 @@ namespace SistemManajemenDistributorSayur
                     MessageBox.Show("Gagal simpan: " + ex.Message);
                 }
             }
+        }
+
+        private void btnBatal_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FormTambahSayur_Load(object sender, EventArgs e)
+        {
+   
         }
     }
 }

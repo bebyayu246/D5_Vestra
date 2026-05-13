@@ -20,6 +20,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -27,6 +28,11 @@
             this.txtNama = new System.Windows.Forms.TextBox();
             this.txtHarga = new System.Windows.Forms.TextBox();
             this.btnSimpan = new System.Windows.Forms.Button();
+            this.dBDistributorSayurDataSet = new SistemManajemenDistributorSayur.DBDistributorSayurDataSet();
+            this.sayurBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sayurTableAdapter = new SistemManajemenDistributorSayur.DBDistributorSayurDataSetTableAdapters.SayurTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDistributorSayurDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sayurBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -61,6 +67,7 @@
             // 
             // txtStok
             // 
+            this.txtStok.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sayurBindingSource, "Stok", true));
             this.txtStok.Location = new System.Drawing.Point(113, 113);
             this.txtStok.Multiline = true;
             this.txtStok.Name = "txtStok";
@@ -69,6 +76,7 @@
             // 
             // txtNama
             // 
+            this.txtNama.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sayurBindingSource, "NamaSayur", true));
             this.txtNama.Location = new System.Drawing.Point(113, 60);
             this.txtNama.Multiline = true;
             this.txtNama.Name = "txtNama";
@@ -77,6 +85,7 @@
             // 
             // txtHarga
             // 
+            this.txtHarga.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sayurBindingSource, "HargaJual", true));
             this.txtHarga.Location = new System.Drawing.Point(113, 175);
             this.txtHarga.Multiline = true;
             this.txtHarga.Name = "txtHarga";
@@ -94,6 +103,20 @@
             this.btnSimpan.UseVisualStyleBackColor = false;
             this.btnSimpan.Click += new System.EventHandler(this.btnSimpan_Click);
             // 
+            // dBDistributorSayurDataSet
+            // 
+            this.dBDistributorSayurDataSet.DataSetName = "DBDistributorSayurDataSet";
+            this.dBDistributorSayurDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // sayurBindingSource
+            // 
+            this.sayurBindingSource.DataMember = "Sayur";
+            this.sayurBindingSource.DataSource = this.dBDistributorSayurDataSet;
+            // 
+            // sayurTableAdapter
+            // 
+            this.sayurTableAdapter.ClearBeforeFill = true;
+            // 
             // FormTambahSayur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -108,6 +131,9 @@
             this.Controls.Add(this.label1);
             this.Name = "FormTambahSayur";
             this.Text = "formTambahSayur";
+            this.Load += new System.EventHandler(this.FormTambahSayur_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dBDistributorSayurDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sayurBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,5 +148,8 @@
         private System.Windows.Forms.TextBox txtNama;
         private System.Windows.Forms.TextBox txtHarga;
         private System.Windows.Forms.Button btnSimpan;
+        private DBDistributorSayurDataSet dBDistributorSayurDataSet;
+        private System.Windows.Forms.BindingSource sayurBindingSource;
+        private DBDistributorSayurDataSetTableAdapters.SayurTableAdapter sayurTableAdapter;
     }
 }
