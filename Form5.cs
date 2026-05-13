@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace SistemManajemenDistributorSayur
 {
-   
     public partial class Form5 : Form
     {
         string connectionString = @"Data Source=LAPTOP-V3CL2RKG\BEBEB;Initial Catalog=DBDistributorsayur;Integrated Security=True";
@@ -15,7 +15,7 @@ namespace SistemManajemenDistributorSayur
             InitializeComponent();
         }
 
-        // Ambil harga otomatis saat sayur dipilih
+        // KETENTUAN: Mengambil harga menggunakan VIEW
         private void cbSayur_SelectedIndexChanged(object sender, EventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -23,7 +23,8 @@ namespace SistemManajemenDistributorSayur
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT HargaJual FROM Sayur WHERE NamaSayur = @nama", conn);
+                    // Mengambil harga dari VIEW v_DataSayur
+                    SqlCommand cmd = new SqlCommand("SELECT HargaJual FROM v_DataSayur WHERE NamaSayur = @nama", conn);
                     cmd.Parameters.AddWithValue("@nama", cbSayur.Text);
 
                     object result = cmd.ExecuteScalar();
@@ -57,7 +58,7 @@ namespace SistemManajemenDistributorSayur
             }
         }
 
-        // Simpan transaksi dan potong stok
+        // KETENTUAN: Simpan transaksi menggunakan STORED PROCEDURE
         private void button1_Click(object sender, EventArgs e)
         {
             if (cbPembeli.SelectedIndex == -1 || cbSayur.SelectedIndex == -1 || string.IsNullOrEmpty(txtJumlah.Text))
@@ -71,45 +72,31 @@ namespace SistemManajemenDistributorSayur
                 try
                 {
                     conn.Open();
-                    SqlTransaction trans = conn.BeginTransaction();
 
-                    // 1. Cek Stok
-                    SqlCommand cmdCek = new SqlCommand("SELECT Stok FROM Sayur WHERE NamaSayur = @nama", conn, trans);
-                    cmdCek.Parameters.AddWithValue("@nama", cbSayur.Text);
-                    int stokGudang = Convert.ToInt32(cmdCek.ExecuteScalar());
-                    int beli = int.Parse(txtJumlah.Text);
+                    // Memanggil Stored Procedure sp_InsertTransaksi
+                    SqlCommand cmd = new SqlCommand("sp_InsertTransaksi", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    if (beli > stokGudang)
-                    {
-                        MessageBox.Show("Stok tidak cukup! Sisa: " + stokGudang);
-                        trans.Rollback();
-                        return;
-                    }
+                    cmd.Parameters.AddWithValue("@Pembeli", cbPembeli.Text);
+                    cmd.Parameters.AddWithValue("@Sayur", cbSayur.Text);
+                    cmd.Parameters.AddWithValue("@Jumlah", int.Parse(txtJumlah.Text));
+                    cmd.Parameters.AddWithValue("@Total", double.Parse(txtTotal.Text));
 
-                    // 2. Potong Stok
-                    SqlCommand cmdUpdate = new SqlCommand("UPDATE Sayur SET Stok = Stok - @j WHERE NamaSayur = @n", conn, trans);
-                    cmdUpdate.Parameters.AddWithValue("@j", beli);
-                    cmdUpdate.Parameters.AddWithValue("@n", cbSayur.Text);
-                    cmdUpdate.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                    // 3. Simpan Nota
-                    string sql = "INSERT INTO Transaksi (NamaPembeli, NamaSayur, Jumlah, TotalHarga, Tanggal) VALUES (@p, @s, @j, @t, GETDATE())";
-                    SqlCommand cmdSimpan = new SqlCommand(sql, conn, trans);
-                    cmdSimpan.Parameters.AddWithValue("@p", cbPembeli.Text);
-                    cmdSimpan.Parameters.AddWithValue("@s", cbSayur.Text);
-                    cmdSimpan.Parameters.AddWithValue("@j", beli);
-                    cmdSimpan.Parameters.AddWithValue("@t", double.Parse(txtTotal.Text));
-                    cmdSimpan.ExecuteNonQuery();
-
-                    trans.Commit();
-                    MessageBox.Show("Transaksi Berhasil!");
+                    MessageBox.Show("Transaksi Berhasil (via Stored Procedure)!");
                     this.Close();
                 }
-                catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
+                catch (Exception ex)
+                {
+                    // Jika stok kurang, SP akan memberikan error yang kita tangkap di sini
+                    MessageBox.Show("Gagal Transaksi: " + ex.Message);
+                }
             }
         }
 
-        private void label4_Click(object sender, EventArgs e) { }
         private void Form5_Load(object sender, EventArgs e) { }
+        private void label4_Click(object sender, EventArgs e) { }
+
     }
 }
