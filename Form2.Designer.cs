@@ -49,6 +49,10 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.txtCari = new System.Windows.Forms.TextBox();
+            this.btnCari = new System.Windows.Forms.Button();
+            this.TestInjection = new System.Windows.Forms.Button();
+            this.btnRiset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -137,7 +141,7 @@
             // btnLogout
             // 
             this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnLogout.Location = new System.Drawing.Point(766, 74);
+            this.btnLogout.Location = new System.Drawing.Point(813, 483);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(75, 23);
             this.btnLogout.TabIndex = 13;
@@ -152,7 +156,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RowHeadersWidth = 51;
             this.dgvData.RowTemplate.Height = 24;
-            this.dgvData.Size = new System.Drawing.Size(554, 249);
+            this.dgvData.Size = new System.Drawing.Size(564, 249);
             this.dgvData.TabIndex = 14;
             // 
             // btnCreate
@@ -174,7 +178,6 @@
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 16;
             this.btnUpdate.Text = "Update";
-            this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnUpdate.UseVisualStyleBackColor = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
@@ -324,11 +327,53 @@
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
+            // txtCari
+            // 
+            this.txtCari.Location = new System.Drawing.Point(238, 124);
+            this.txtCari.Name = "txtCari";
+            this.txtCari.Size = new System.Drawing.Size(170, 22);
+            this.txtCari.TabIndex = 23;
+            this.txtCari.Click += new System.EventHandler(this.btnCari_Click);
+            // 
+            // btnCari
+            // 
+            this.btnCari.Location = new System.Drawing.Point(419, 119);
+            this.btnCari.Name = "btnCari";
+            this.btnCari.Size = new System.Drawing.Size(130, 33);
+            this.btnCari.TabIndex = 24;
+            this.btnCari.Text = "Search SP";
+            this.btnCari.UseVisualStyleBackColor = true;
+            this.btnCari.Click += new System.EventHandler(this.btnCari_Click);
+            // 
+            // TestInjection
+            // 
+            this.TestInjection.Location = new System.Drawing.Point(555, 118);
+            this.TestInjection.Name = "TestInjection";
+            this.TestInjection.Size = new System.Drawing.Size(130, 33);
+            this.TestInjection.TabIndex = 25;
+            this.TestInjection.Text = "Test Injection";
+            this.TestInjection.UseVisualStyleBackColor = true;
+            this.TestInjection.Click += new System.EventHandler(this.btnTes_Click);
+            // 
+            // btnRiset
+            // 
+            this.btnRiset.Location = new System.Drawing.Point(691, 119);
+            this.btnRiset.Name = "btnRiset";
+            this.btnRiset.Size = new System.Drawing.Size(111, 32);
+            this.btnRiset.TabIndex = 26;
+            this.btnRiset.Text = "Reset Data";
+            this.btnRiset.UseVisualStyleBackColor = true;
+            this.btnRiset.Click += new System.EventHandler(this.btnRiset_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 531);
+            this.Controls.Add(this.btnRiset);
+            this.Controls.Add(this.TestInjection);
+            this.Controls.Add(this.btnCari);
+            this.Controls.Add(this.txtCari);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.btnRead);
             this.Controls.Add(this.btnDelete);
@@ -385,5 +430,9 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private System.Windows.Forms.TextBox txtCari;
+        private System.Windows.Forms.Button btnCari;
+        private System.Windows.Forms.Button TestInjection;
+        private System.Windows.Forms.Button btnRiset;
     }
 }
