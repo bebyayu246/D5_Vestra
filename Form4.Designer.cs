@@ -21,6 +21,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtAlamat = new System.Windows.Forms.TextBox();
             this.txtNoTelp = new System.Windows.Forms.TextBox();
             this.cbStatus = new System.Windows.Forms.ComboBox();
@@ -30,10 +31,16 @@
             this.btnSimpan = new System.Windows.Forms.Button();
             this.txtNama = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.dBDistributorSayurDataSet = new SistemManajemenDistributorSayur.DBDistributorSayurDataSet();
+            this.petaniBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.petaniTableAdapter = new SistemManajemenDistributorSayur.DBDistributorSayurDataSetTableAdapters.PetaniTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDistributorSayurDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.petaniBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // txtAlamat
             // 
+            this.txtAlamat.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.petaniBindingSource, "Alamat", true));
             this.txtAlamat.Location = new System.Drawing.Point(144, 102);
             this.txtAlamat.Multiline = true;
             this.txtAlamat.Name = "txtAlamat";
@@ -42,6 +49,7 @@
             // 
             // txtNoTelp
             // 
+            this.txtNoTelp.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.petaniBindingSource, "NoTelepon", true));
             this.txtNoTelp.Location = new System.Drawing.Point(144, 150);
             this.txtNoTelp.Multiline = true;
             this.txtNoTelp.Name = "txtNoTelp";
@@ -102,6 +110,7 @@
             // 
             // txtNama
             // 
+            this.txtNama.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.petaniBindingSource, "NamaPetani", true));
             this.txtNama.Location = new System.Drawing.Point(144, 54);
             this.txtNama.Multiline = true;
             this.txtNama.Name = "txtNama";
@@ -117,6 +126,20 @@
             this.label4.Size = new System.Drawing.Size(61, 22);
             this.label4.TabIndex = 19;
             this.label4.Text = "Status";
+            // 
+            // dBDistributorSayurDataSet
+            // 
+            this.dBDistributorSayurDataSet.DataSetName = "DBDistributorSayurDataSet";
+            this.dBDistributorSayurDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // petaniBindingSource
+            // 
+            this.petaniBindingSource.DataMember = "Petani";
+            this.petaniBindingSource.DataSource = this.dBDistributorSayurDataSet;
+            // 
+            // petaniTableAdapter
+            // 
+            this.petaniTableAdapter.ClearBeforeFill = true;
             // 
             // FormDataPetaniDanPembeli
             // 
@@ -134,6 +157,9 @@
             this.Controls.Add(this.lblNama);
             this.Name = "FormDataPetaniDanPembeli";
             this.Text = "DataPetaniDanPembeli";
+            this.Load += new System.EventHandler(this.FormDataPetaniDanPembeli_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dBDistributorSayurDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.petaniBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +175,8 @@
         private System.Windows.Forms.Button btnSimpan;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNama;
+        private DBDistributorSayurDataSet dBDistributorSayurDataSet;
+        private System.Windows.Forms.BindingSource petaniBindingSource;
+        private DBDistributorSayurDataSetTableAdapters.PetaniTableAdapter petaniTableAdapter;
     }
 }

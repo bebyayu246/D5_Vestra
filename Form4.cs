@@ -112,37 +112,40 @@ namespace SistemManajemenDistributorSayur
                 try
                 {
                     conn.Open();
-                    string sql = "";
-                    string tabel = (tipeOrang == "Petani") ? "Petani" : "Pembeli";
-                    string kolomNama = (tipeOrang == "Petani") ? "NamaPetani" : "NamaPembeli";
-                    string kolomID = (tipeOrang == "Petani") ? "ID_Petani" : "ID_Pembeli";
+                    string spName = (tipeOrang == "Petani") ? "sp_ManagePetani" : "sp_ManagePembeli";
+                    SqlCommand cmd = new SqlCommand(spName, conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
                     if (idEdit == "")
                     {
-                        sql = $"INSERT INTO {tabel} ({kolomNama}, Alamat, NoTelepon, Status) VALUES (@n, @a, @t, @s)";
+                        cmd.Parameters.AddWithValue("@Action", "INSERT");
                     }
                     else
                     {
-                        sql = $"UPDATE {tabel} SET {kolomNama}=@n, Alamat=@a, NoTelepon=@t, Status=@s WHERE {kolomID}=@id";
+                        cmd.Parameters.AddWithValue("@Action", "UPDATE");
+                        cmd.Parameters.AddWithValue("@ID", idEdit);
                     }
 
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@n", txtNama.Text);
-                    cmd.Parameters.AddWithValue("@a", txtAlamat.Text);
-                    cmd.Parameters.AddWithValue("@t", txtNoTelp.Text);
-                    cmd.Parameters.AddWithValue("@s", cbStatus.Text);
-                    if (idEdit != "") cmd.Parameters.AddWithValue("@id", idEdit);
+                    cmd.Parameters.AddWithValue("@Nama", txtNama.Text);
+                    cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
+                    cmd.Parameters.AddWithValue("@Telp", txtNoTelp.Text);
+                    cmd.Parameters.AddWithValue("@Status", cbStatus.Text); 
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show($"Data {tipeOrang} berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    this.Close();
+                    this.Close(); 
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Gagal menyimpan data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void FormDataPetaniDanPembeli_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'dBDistributorSayurDataSet.Petani' table. You can move, or remove it, as needed.
         }
     }
 }
